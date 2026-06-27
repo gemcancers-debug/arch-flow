@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchFlow | تولید لایه‌بندی و ورک‌فلو</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Vazirmatn', system-ui, sans-serif; }
+    </style>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
+    <header class="bg-white dark:bg-zinc-900 border-b sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-x-3">
+                <div class="w-11 h-11 bg-violet-600 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-sitemap text-white"></i></div>
+                <h1 class="text-3xl font-bold">ArchFlow</h1>
+            </div>
+            <div class="text-sm text-right">
+                <div class="font-semibold">Hamed Farifteh</div>
+                <div class="text-xs text-zinc-500">Developer</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-5xl mx-auto px-6 py-10">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-bold tracking-tight">ایده بده، معماری بگیر</h2>
+        </div>
+
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 mb-8">
+            <!-- Form fields -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="md:col-span-2">
+                    <input id="idea-title" type="text" placeholder="عنوان ایده" value="اپلیکیشن فروشگاهی آنلاین" class="w-full px-5 py-4 rounded-2xl border">
+                </div>
+                <div class="md:col-span-2">
+                    <textarea id="idea-desc" class="w-full px-5 py-4 rounded-2xl border" placeholder="توضیح کوتاه">فروشگاه آنلاین با سبد خرید و پرداخت</textarea>
+                </div>
+                <div>
+                    <select id="platform" class="w-full px-5 py-4 rounded-2xl border">
+                        <option value="web">وب</option>
+                        <option value="mobile">موبایل</option>
+                        <option value="cross">چند پلتفرمی</option>
+                    </select>
+                </div>
+                <div>
+                    <input id="features" type="text" value="ثبت‌نام, سبد خرید, پرداخت آنلاین" class="w-full px-5 py-4 rounded-2xl border">
+                </div>
+            </div>
+
+            <button onclick="generate()" class="mt-6 w-full py-4 bg-violet-600 text-white rounded-3xl font-semibold">تولید لایه‌بندی و ورک‌فلو</button>
+        </div>
+
+        <div id="results" class="hidden">
+            <h3 class="text-2xl font-bold mb-4">لایه‌بندی معماری</h3>
+            <div id="layers" class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10"></div>
+
+            <h3 class="text-2xl font-bold mb-4">ورک‌فلو</h3>
+            <div class="bg-white dark:bg-zinc-900 p-6 rounded-3xl border mb-10">
+                <div id="diagram" class="mermaid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generate() {
+            document.getElementById('results').classList.remove('hidden');
+            // Simple demo layers
+            const layersDiv = document.getElementById('layers');
+            layersDiv.innerHTML = `
+                <div class="p-5 border rounded-2xl">Frontend Layer<br><span class="text-sm text-zinc-500">رابط کاربری و نمایش</span></div>
+                <div class="p-5 border rounded-2xl">Business Logic<br><span class="text-sm text-zinc-500">منطق اصلی و پردازش</span></div>
+                <div class="p-5 border rounded-2xl">Data Layer<br><span class="text-sm text-zinc-500">مدیریت داده و دیتابیس</span></div>
+            `;
+
+            // Simple Mermaid diagram
+            const diagram = document.getElementById('diagram');
+            diagram.innerHTML = `graph TD
+                A[کاربر] --> B[Frontend]
+                B --> C[API / Backend]
+                C --> D[Database]`;
+            mermaid.run();
+        }
+
+        function init() {
+            document.documentElement.classList.add('dark');
+            mermaid.initialize({startOnLoad:true});
+        }
+        window.onload = init;
+    </script>
+</body>
+</html>
